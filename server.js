@@ -3,11 +3,13 @@ const app = express()
 const port = process.env.PORT || 3000
 const { Client } = require('pg');
 
+app.use(express.json());
+
 app.get('/hello-world', (request, response) => {
   response.send('Hello World!')
 })
 
-async function insertStudent() {
+async function insertStudent(data) {
     let client
     try{
         client = new Client({
@@ -21,7 +23,7 @@ async function insertStudent() {
           })
         await client.connect()
         await client.query(`
-        insert into public.class_students(name,email_address)VALUES('Xerxes', 'justxerxes@gmail.com' )`)
+        insert into public.class_students(name,email_address)VALUES('${data.name}', '${data.email}' )`)
     }catch(e){
         console.error(`[ERROR in insertStudent]: ${e}`);
         throw e;
@@ -34,12 +36,12 @@ app.post('/create-student', async (request, response)=>{
   // write the code to insert some hard coded student in PG-SQL(on render)
   let message = "", status = 0;
   try{
-    const data = request.body()
+    const data = request.body
     await insertStudent(data)
     message = `SUCCESS - I was able to create a student`
     status = 201;
   }catch(error){
-    console.error(`ERROR in POST`)
+    console.error(`ERROR in POST ${error.message}`)
     message = `ERROR- I could not create the student`
     status = 500;
   } finally {
