@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
-const port = 3003
+const port = process.env.PORT || 3003
+const { Client } = require('pg');
 
-app.get('/', (request, response) => {
+app.get('/hello-world', (request, response) => {
   response.send('Hello World!')
 })
 
@@ -28,6 +29,7 @@ async function insertStudent(data) {
         client.end()
     }
   }
+  
 app.post('/create-student', async (request, response)=>{
   // write the code to insert some hard coded student in PG-SQL(on render)
   let message = "", status = 0;
