@@ -20,7 +20,7 @@ async function insertStudent(data) {
           })
         await client.connect()
         await client.query(`
-        insert into public.class_students(name,email_address)VALUES('${data.name}', '${data.email}' )`)
+        insert into public.class_students(name,email_address)VALUES('Xerxes', 'justxerxes@gmail.com' )`)
     }catch(e){
         console.error(`[ERROR in insertUser]: ${e}`);
         throw e;
