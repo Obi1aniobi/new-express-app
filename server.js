@@ -7,7 +7,7 @@ app.get('/hello-world', (request, response) => {
   response.send('Hello World!')
 })
 
-async function insertStudent(data) {
+async function insertStudent() {
     let client
     try{
         client = new Client({
@@ -23,7 +23,7 @@ async function insertStudent(data) {
         await client.query(`
         insert into public.class_students(name,email_address)VALUES('Xerxes', 'justxerxes@gmail.com' )`)
     }catch(e){
-        console.error(`[ERROR in insertUser]: ${e}`);
+        console.error(`[ERROR in insertStudent]: ${e}`);
         throw e;
     }finally{
         client.end()
