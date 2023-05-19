@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const { Client } = require('pg');
-
+const {runQuery } = request("./database")
 app.use(express.json());
 
 app.get('/hello-world', (request, response) => {
@@ -37,19 +37,19 @@ app.post('/create-student', async (request, response)=>{
   let message = "", status = 0;
   try{
     const data = request.body
-    await insertStudent(data)
-    message = `SUCCESS - I was able to create a student`
-    status = 201;
-  }catch(error){
-    console.error(`ERROR in POST ${error.message}`)
-    message = `ERROR- I could not create the student`
-    status = 500;
-  } finally {
-    response.status(status).send(message)
-  }
+    await runQuery(`
+        insert into public.class_students(name,email_address)VALUES('${data.name}', '${data.email}' )`);
+            message = `SUCCESS - I was able to create a student`
+            status = 201;
+        }catch(error){
+            console.error(`ERROR in POST ${error.message}`)
+            message = `ERROR- I could not create the student`
+            status = 500;
+        } finally {
+            response.status(status).send(message)
+    }
 
 })
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
