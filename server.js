@@ -2,15 +2,18 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const { Client } = require('pg');
-const {runQuery } = require('./database')
+//const {runQuery } = require('./database')
+const { studentRouter } = require("./routers/students")
 
 app.use(express.json());
 
-app.get('/hello-world', (request, response) => {
-  response.send('Hello World!')
-})
+app.use('/student', studentRouter)  // amiddleware
 
-async function insertStudent(data) {
+/*app.get('/hello-world', (request, response) => {
+  response.send('Hello World!')
+})*/
+
+/*async function insertStudent(data) {
     let client
     try{
         client = new Client({
@@ -30,9 +33,11 @@ async function insertStudent(data) {
     }finally{
         client.end()
     }
-  }
+  }*/
 
-app.post('/create-student', async (request, response)=>{
+
+
+/*app.post('/create-student', async (request, response)=>{
   // write the code to insert some hard coded student in PG-SQL(on render)
   let message = "", status = 0;
   try{
@@ -49,7 +54,65 @@ app.post('/create-student', async (request, response)=>{
         response.status(status).send(message)
         }
 
-})
+})*/
+
+
+/*app.put('/student/:id', async (request, response)=>{
+    // write the code to insert some hard coded student in PG-SQL(on render)
+    let message = "", status = 0;
+    try{
+      const data = request.body
+      await runQuery(`update public.class_students set name='${data.name}', email_address='${data.email}' where id='${id}' `);
+          message = `SUCCESS - I was able to update student`
+          status = 201;
+          }catch(error){
+          console.error(`ERROR in POST ${error.message}`)
+          message = `ERROR- I could not update student`
+          status = 500;
+          } finally {
+          response.status(status).send(message)
+          }
+  
+  })*/
+
+  
+  /*app.get('/student/:id', async (request, response)=>{
+    // write the code to insert some hard coded student in PG-SQL(on render)
+    let message = "", status = 0;
+    try{
+      const data = request.body
+      await runQuery(`select * from public.class_students where id='${id}'`);
+          message = `SUCCESS - I was able to select student`
+          status = 201;
+          }catch(error){
+          console.error(`ERROR in POST ${error.message}`)
+          message = `ERROR- I could not select student`
+          status = 500;
+          } finally {
+          response.status(status).send(message)
+          }
+  
+  })*/
+
+ 
+  /*app.delete('/student/:id', async (request, response)=>{
+    // write the code to insert some hard coded student in PG-SQL(on render)
+    let message = "", status = 0;
+    try{
+      const data = request.body
+      await runQuery(`delete from public.class_students where id='${id}'`);
+          message = `SUCCESS - I was able to delete student`
+          status = 201;
+          }catch(error){
+          console.error(`ERROR in POST ${error.message}`)
+          message = `ERROR- I could not delete student`
+          status = 500;
+          } finally {
+          response.status(status).send(message)
+          }
+  
+  })*/
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
