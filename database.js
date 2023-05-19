@@ -1,3 +1,30 @@
+const { Client } = require('pg')
+async function runQuery(query){
+    let connection
+    try{  
+        connection = new Client({
+            host: 'dpg-ch3bqequt4m9tsckm0cg-a.frankfurt-postgres.render.com',
+            port: 5432,
+            database: 'learning_sql_1y7q',
+            user: 'peter',
+            password: 'NPq68LzqToDhloxMYVw6dm8Q1XQYyw9Y',
+            ssl: { rejectUnauthorized: false }
+          })
+         await connection.connect()
+         return await connection.query(query)
+    }catch(error){
+        console.error(`[ERROR in runQuery] ${error.message}`)
+        throw error
+    } finally {
+        connection.end()
+    }
+}
+
+module.exports = {
+    runQuery
+}
+
+
 //function connectToDatabase(){
    /* this file will be responsible for :
  1. to connect to db --
@@ -58,7 +85,7 @@ app.post('/student', async (request, response)=>{
 }
 */
 
-const { Client } = require('pg')
+/*const { Client } = require('pg')
 const { runQuery } = require("./database")
 
 async function connectToDatabase(){
@@ -90,4 +117,5 @@ async function runQuery(query){
 
 module.exports = {
     runQuery
-}
+}*/
+
