@@ -51,6 +51,10 @@ app.post('/create-student', async (request, response)=>{
 
 })
 
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
+
 
 /*
 
@@ -73,8 +77,5 @@ app.post('/student', async (request, response)=>{
      response.status(status).send(message)
    }
  
- })
+ })*/
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})*/
