@@ -3,11 +3,11 @@ const app = express()
 const port = process.env.PORT || 3000
 const { Client } = require('pg');
 //const {runQuery } = require('./database')
-const { studentRouter } = require("./routers/students")
+const { studentRouter } = require("./routers/student")
 
 app.use(express.json());
 
-app.use('/student', studentRouter)  // amiddleware
+app.use('/student', studentRouter)  // a middleware
 
 /*app.get('/hello-world', (request, response) => {
   response.send('Hello World!')
